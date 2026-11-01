@@ -158,6 +158,33 @@ export default function Home() {
             <ArrowRight size={16} />
           </Link>
         </div>
+
+        {/* Module 5: Citizen Tools (5-in-1 Civic Suite) */}
+        <div className="md:col-span-2 bg-gradient-to-r from-orange-50/70 via-amber-50/50 to-emerald-50/70 border border-orange-200 rounded-2xl p-6 shadow-sm hover:border-orange-400 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">🛠️</span>
+              <h2 className="text-xl font-bold text-slate-900">
+                {lang === 'hi' ? 'नागरिक अधिकार एवं सुविधा टूलकिट (5-in-1)' : 'Citizen Civic Toolkit (5-in-1)'}
+              </h2>
+              <span className="px-2.5 py-0.5 rounded-full bg-orange-600 text-white font-bold text-[10px] uppercase tracking-wider">
+                Essential
+              </span>
+            </div>
+            <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">
+              {lang === 'hi'
+                ? 'दस्तावेज़ नाम व वैधता परीक्षक, सीएससी आधिकारिक दर सूची (दलाली रोकथाम), अस्वीकृति कोड समाधान (PFMS/NPCI), 1-क्लिक आरटीआई (RTI) प्रारूपक और डीबीटी बैंक खाता तत्परता जांच।'
+                : 'Document Name & Expiry Auditor, Official CSC Rate Card (anti-overcharging), Rejection Decrypter (PFMS/NPCI), 1-Click RTI Escalator, and DBT Bank Health Check.'}
+            </p>
+          </div>
+          <Link
+            to="/tools"
+            className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-xs transition-colors"
+          >
+            <span>{lang === 'hi' ? 'टूलकिट खोलें' : 'Open Civic Toolkit'}</span>
+            <ArrowRight size={15} />
+          </Link>
+        </div>
       </section>
 
       {/* How It Works */}

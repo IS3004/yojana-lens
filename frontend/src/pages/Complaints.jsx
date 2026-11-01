@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import {
   AlertOctagon, Copy, Check, Upload, Send, Clock, AlertTriangle,
   Building2, MapPin, Tag, RefreshCw, CheckCircle2, ChevronDown, ChevronUp, AlertCircle,
-  Paperclip, X, ImageIcon, FileText, Printer, FileDown
+  Paperclip, X, ImageIcon, FileText, Printer, FileDown, Scale
 } from 'lucide-react'
 import { useLang } from '../i18n/strings'
 import client, { useMock } from '../api/client'
@@ -540,6 +541,16 @@ export default function Complaints() {
                   <div className="text-[11px] text-slate-500 bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center justify-between">
                     <span className="truncate mr-2 font-medium">To: {item.department}</span>
                     <div className="flex items-center gap-1.5 shrink-0">
+                      {isOverdue && item.status !== 'resolved' && (
+                        <Link
+                          to="/tools"
+                          title="Grievance delayed beyond Citizen Charter timeline: Draft Section 6(1) RTI Application"
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-purple-100 hover:bg-purple-200 text-purple-800 text-[10px] font-bold transition-colors cursor-pointer"
+                        >
+                          <Scale size={10} />
+                          <span>RTI Escalate</span>
+                        </Link>
+                      )}
                       <button
                         type="button"
                         onClick={() => printPetitionPdf(item, lang)}

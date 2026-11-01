@@ -6,7 +6,16 @@ export const strings = {
   en: {
     brand: 'YojanaLens',
     tagline: 'Find every scheme you deserve. Verified at the source.',
-    nav: { home: 'Home', khoj: 'Khoj (Find)', parakh: 'Parakh (Verify)', complaints: 'Complaints', dashboard: 'Dashboard' },
+    nav: { home: 'Home', khoj: 'Khoj (Find)', parakh: 'Parakh (Verify)', complaints: 'Complaints', tools: 'Citizen Tools', dashboard: 'Dashboard' },
+    tools: {
+      title: 'Citizen Civic Toolkit (नागरिक सुविधा केंद्र)',
+      subtitle: '5 essential tools solving the most critical ground-level administrative roadblocks for Indian citizens.',
+      tab1: '1. Document Auditor',
+      tab2: '2. CSC Rate Card',
+      tab3: '3. Rejection Decrypter',
+      tab4: '4. Auto-RTI Escalator',
+      tab5: '5. DBT Bank Health',
+    },
     home: {
       hero: 'Find every government scheme you deserve.',
       heroSub: 'Tell us about yourself in English, Hindi, or Hinglish — our AI finds matching central and state schemes, verified at official sources.',
@@ -197,7 +206,16 @@ export const strings = {
   hi: {
     brand: 'योजनालेंस',
     tagline: 'हर वो योजना जिसके आप हकदार हैं। आधिकारिक स्रोत से सत्यापित।',
-    nav: { home: 'होम', khoj: 'खोज', parakh: 'परख', complaints: 'शिकायतें', dashboard: 'डैशबोर्ड' },
+    nav: { home: 'होम', khoj: 'खोज', parakh: 'परख', complaints: 'शिकायतें', tools: 'नागरिक टूलकिट', dashboard: 'डैशबोर्ड' },
+    tools: {
+      title: 'नागरिक सुविधा एवं अधिकार टूलकिट',
+      subtitle: 'भारतीय नागरिकों के लिए दस्तावेज़, शुल्क, अस्वीकृति एवं अधिकारों से जुड़ी समस्याओं का 5-इन-1 डिजिटल समाधान।',
+      tab1: '1. दस्तावेज़ परख (नाम व वैधता)',
+      tab2: '2. सीएससी आधिकारिक दर सूची',
+      tab3: '3. कारण खोज (अस्वीकृति कोड)',
+      tab4: '4. आरटीआई (RTI) याचिका',
+      tab5: '5. डीबीटी (DBT) बैंक जांच',
+    },
     home: {
       hero: 'हर सरकारी योजना जिसके आप हकदार हैं।',
       heroSub: 'हिंदी, अंग्रेज़ी या हिंगलिश में अपनी स्थिति बताएं — हमारा AI केंद्रीय और राज्य की योजनाएं ढूंढता है, आधिकारिक स्रोतों से सत्यापित।',

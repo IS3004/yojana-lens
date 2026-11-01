@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useLang } from '../i18n/strings'
-import { Globe, BarChart2, Search, ShieldCheck, AlertOctagon } from 'lucide-react'
+import { Globe, BarChart2, Search, ShieldCheck, AlertOctagon, Wrench } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Navbar() {
@@ -12,6 +12,7 @@ export default function Navbar() {
     { to: '/khoj', label: t.nav.khoj, icon: <Search size={15} /> },
     { to: '/parakh', label: t.nav.parakh, icon: <ShieldCheck size={15} /> },
     { to: '/complaints', label: t.nav.complaints || 'Complaints', icon: <AlertOctagon size={15} /> },
+    { to: '/tools', label: t.nav.tools || 'Tools', icon: <Wrench size={15} /> },
     { to: '/dashboard', label: t.nav.dashboard, icon: <BarChart2 size={15} /> },
   ]
 

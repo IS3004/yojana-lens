@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Khoj from './pages/Khoj'
 import Parakh from './pages/Parakh'
 import Complaints from './pages/Complaints'
+import Tools from './pages/Tools'
 import Dashboard from './pages/Dashboard'
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/khoj" element={<Khoj />} />
           <Route path="/parakh" element={<Parakh />} />
           <Route path="/complaints" element={<Complaints />} />
+          <Route path="/tools" element={<Tools />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </main>
