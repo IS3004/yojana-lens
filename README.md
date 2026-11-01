@@ -2,6 +2,15 @@
 > **"Find every scheme you deserve. Verified at the source."**
 > *"हर वो योजना जिसके आप हकदार हैं। आधिकारिक स्रोत से सत्यापित।"*
 
+[![Live Frontend](https://img.shields.io/badge/Live%20App-Vercel-black?style=for-the-badge&logo=vercel)](https://yojana-lens.vercel.app/)
+[![Live Backend API](https://img.shields.io/badge/Backend%20API-Render-46E3B7?style=for-the-badge&logo=render)](https://yojanalens-backend.onrender.com/)
+[![Interactive Docs](https://img.shields.io/badge/API%20Docs-Swagger-85EA2D?style=for-the-badge&logo=swagger)](https://yojanalens-backend.onrender.com/docs)
+
+- 🌐 **Live Web Application**: [https://yojana-lens.vercel.app/](https://yojana-lens.vercel.app/)
+- ⚙️ **Production API**: [https://yojanalens-backend.onrender.com/](https://yojanalens-backend.onrender.com/)
+- 📖 **Swagger API Docs**: [https://yojanalens-backend.onrender.com/docs](https://yojanalens-backend.onrender.com/docs)
+- 🗄️ **Database**: Supabase Postgres (Live Grievance Tracker)
+
 YojanaLens is a bilingual (English / Hindi) Indian civic intelligence platform designed to connect citizens with government welfare schemes, debunk fraudulent viral circulars, simplify complex bureaucratic gazette orders, draft administrative petitions for civic grievances, and provide radical transparency into public budget spending.
 
 ---
