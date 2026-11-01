@@ -149,7 +149,7 @@ export default function SchemeCard({ scheme }) {
     : 'border-t-4 border-t-amber-warn'
 
   return (
-    <div className={`rounded-2xl border border-border shadow-card transition-all flex flex-col justify-between overflow-hidden bg-surface hover:shadow-md ${stripeClass} ${
+    <div className={`rounded-2xl border border-border shadow-card transition-all flex flex-col justify-between overflow-hidden bg-surface hover:shadow-md fade-in-entry ${stripeClass} ${
       timeline === 'ended' ? 'opacity-85' : ''
     }`}>
       <div className="p-5 space-y-4">

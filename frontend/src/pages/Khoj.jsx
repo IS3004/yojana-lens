@@ -207,7 +207,12 @@ export default function Khoj() {
 
       {/* Chat Messages Log */}
       {messages.length > 0 && (
-        <div className="bg-slate-100/70 border border-border rounded-2xl p-4 sm:p-5 space-y-3.5 max-h-72 overflow-y-auto">
+        <div
+          role="region"
+          aria-live="polite"
+          aria-label="Conversation with YojanaLens assistant"
+          className="bg-slate-100/70 border border-border rounded-2xl p-4 sm:p-5 space-y-3.5 max-h-72 overflow-y-auto fade-in-entry"
+        >
           {messages.map((m, idx) => (
             <div
               key={idx}

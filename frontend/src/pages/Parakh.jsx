@@ -303,12 +303,14 @@ export default function Parakh() {
           </div>
 
           {claimError && (
-            <div className="bg-danger-tint border border-danger/40 rounded-xl p-4 text-xs sm:text-sm text-danger">
+            <div role="alert" className="bg-danger-tint border border-danger/40 rounded-xl p-4 text-xs sm:text-sm text-danger">
               {claimError}
             </div>
           )}
 
-          {verdictResult && <VerdictCard result={verdictResult} />}
+          <div role="region" aria-live="polite" aria-label="Official verification result" className="scale-in-entry">
+            {verdictResult && <VerdictCard result={verdictResult} />}
+          </div>
         </div>
       )}
 

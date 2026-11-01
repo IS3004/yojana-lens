@@ -60,7 +60,7 @@ export default function VerdictCard({ result }) {
   }
 
   return (
-    <div className={`rounded-2xl border shadow-card overflow-hidden transition-all ${statusConfig.bg}`}>
+    <div className={`rounded-2xl border shadow-card overflow-hidden transition-all scale-in-entry ${statusConfig.bg}`}>
       {/* Verdict Header */}
       <div className={`p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 ${statusConfig.headerBg}`}>
         <div className="flex items-center gap-3">
