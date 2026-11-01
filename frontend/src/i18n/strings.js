@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, createElement } from 'react'
+import { createContext, useContext, useState, useEffect, createElement } from 'react'
 
 // ─── All UI strings ──────────────────────────────────────────────────────────
 
@@ -413,6 +413,13 @@ export function LangProvider({ children }) {
   const saved = typeof window !== 'undefined'
     ? (localStorage.getItem('yl_lang') || 'en') : 'en'
   const [lang, setLangState] = useState(saved)
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang
+      document.documentElement.setAttribute('data-lang', lang)
+    }
+  }, [lang])
 
   const setLang = (l) => {
     setLangState(l)
