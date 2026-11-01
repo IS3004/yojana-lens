@@ -8,46 +8,48 @@ export default function SourceBadge({ source_status, evidence = [] }) {
   const verified = source_status === 'verified'
 
   return (
-    <div className={`rounded-lg border text-sm ${
+    <div className={`rounded-xl border text-sm transition-all ${
       verified
-        ? 'bg-green-50 border-green-200'
-        : 'bg-slate-50 border-slate-200'
+        ? 'bg-emerald-tint/60 border-emerald-verified/30'
+        : 'bg-slate-50 border-border'
     }`}>
       <button
         onClick={() => verified && setOpen(!open)}
-        className={`w-full flex items-center gap-2 px-3 py-2 ${verified ? 'cursor-pointer' : 'cursor-default'}`}
+        className={`w-full flex items-center gap-2 px-3.5 py-2.5 text-left rounded-xl ${verified ? 'cursor-pointer hover:bg-emerald-tint/80' : 'cursor-default'}`}
         disabled={!verified}
+        aria-expanded={verified ? open : undefined}
       >
         {verified
-          ? <ShieldCheck size={15} className="text-green-600 shrink-0" />
-          : <ShieldOff size={15} className="text-slate-400 shrink-0" />
+          ? <ShieldCheck size={16} className="text-emerald-verified shrink-0" />
+          : <ShieldOff size={16} className="text-muted shrink-0" />
         }
-        <span className={`font-medium ${verified ? 'text-green-700' : 'text-slate-500'}`}>
+        <span className={`font-semibold text-xs sm:text-sm ${verified ? 'text-emerald-verified' : 'text-muted'}`}>
           {verified ? t.source.verified : t.source.unverified}
         </span>
         {verified && evidence.length > 0 && (
-          <span className="ml-auto text-green-500">
-            {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          <span className="ml-auto text-emerald-verified/70">
+            {open ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
           </span>
         )}
       </button>
 
       {verified && open && evidence.length > 0 && (
-        <div className="border-t border-green-100 px-3 py-2 space-y-2">
-          <p className="text-xs font-semibold text-green-600 uppercase tracking-wide">
+        <div className="border-t border-emerald-verified/20 px-3.5 py-3 space-y-2.5 bg-white/60 rounded-b-xl">
+          <p className="text-[11px] font-bold text-emerald-verified uppercase tracking-wider">
             {t.source.evidence}
           </p>
           {evidence.map((ev, i) => (
-            <div key={i} className="text-xs text-slate-600">
+            <div key={i} className="text-xs text-navy/80">
               <a
                 href={ev.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-blue-600 hover:underline flex items-center gap-1"
+                className="font-medium text-info hover:underline inline-flex items-center gap-1"
               >
-                {ev.title} <ExternalLink size={11} />
+                <span>{ev.title}</span>
+                <ExternalLink size={12} className="shrink-0" />
               </a>
-              {ev.snippet && <p className="text-slate-500 mt-0.5">{ev.snippet}</p>}
+              {ev.snippet && <p className="text-muted mt-0.5 leading-relaxed">{ev.snippet}</p>}
             </div>
           ))}
         </div>

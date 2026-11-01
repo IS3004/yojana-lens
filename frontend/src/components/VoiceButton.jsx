@@ -39,14 +39,15 @@ export default function VoiceButton({ onResult, listening, setListening }) {
     <button
       type="button"
       onClick={toggle}
-      title={listening ? t.khoj.listening : 'Voice input'}
-      className={`flex items-center justify-center w-10 h-10 rounded-full transition-all ${
+      title={listening ? (t.khoj?.listening || 'Listening…') : (lang === 'hi' ? 'बोलकर बताएं' : 'Voice input')}
+      aria-label={listening ? (t.khoj?.listening || 'Listening…') : (lang === 'hi' ? 'बोलकर बताएं' : 'Voice input')}
+      className={`flex items-center justify-center min-w-[48px] min-h-[48px] w-12 h-12 rounded-full transition-all cursor-pointer focus-visible:outline-3 focus-visible:outline-saffron focus-visible:outline-offset-2 ${
         listening
-          ? 'bg-red-500 text-white pulse-mic'
-          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          ? 'bg-danger text-white pulse-mic ring-4 ring-danger/20'
+          : 'bg-white border border-border text-navy hover:bg-slate-50 hover:text-saffron shadow-xs'
       }`}
     >
-      {listening ? <MicOff size={18} /> : <Mic size={18} />}
+      {listening ? <MicOff size={20} /> : <Mic size={20} />}
     </button>
   )
 }
