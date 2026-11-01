@@ -1,0 +1,316 @@
+[
+  {
+    "id": "pm-kisan",
+    "scheme": "PM Kisan Samman Nidhi",
+    "scheme_hi": "पीएम किसान सम्मान निधि",
+    "benefit": "₹6,000/year direct bank transfer in 3 installments of ₹2,000",
+    "benefit_hi": "प्रति वर्ष ₹6,000 तीन किस्तों में सीधे बैंक खाते में",
+    "status": "active",
+    "source_url": "https://pmkisan.gov.in",
+    "last_verified": "2026-10-15",
+    "opens_on": null,
+    "closes_on": null,
+    "dates_confirmed": false,
+    "rules": {
+      "is_farmer": true,
+      "min_age": 18
+    },
+    "documents": [
+      "Aadhaar Card",
+      "Land Record (Khasra/Khatauni)",
+      "Aadhaar-linked Bank Passbook",
+      "Active Mobile Number"
+    ],
+    "apply_url": "https://pmkisan.gov.in",
+    "reason": "Direct income support for all landholding farmer families across India.",
+    "evidence": [
+      {
+        "title": "PM-Kisan Official Portal",
+        "url": "https://pmkisan.gov.in",
+        "snippet": "Pradhan Mantri Kisan Samman Nidhi is a central sector scheme with 100% funding from Government of India."
+      }
+    ]
+  },
+  {
+    "id": "pmjdy",
+    "scheme": "Pradhan Mantri Jan Dhan Yojana",
+    "scheme_hi": "प्रधानमंत्री जन धन योजना",
+    "benefit": "Zero-balance bank account + ₹2 Lakh RuPay accidental insurance + ₹10,000 overdraft",
+    "benefit_hi": "शून्य-बैलेंस बैंक खाता + ₹2 लाख दुर्घटना बीमा + ओवरड्राफ्ट",
+    "status": "active",
+    "source_url": "https://pmjdy.gov.in",
+    "last_verified": "2026-10-20",
+    "opens_on": null,
+    "closes_on": null,
+    "dates_confirmed": false,
+    "rules": {
+      "min_age": 10
+    },
+    "documents": [
+      "Aadhaar Card or Voter ID Card",
+      "Passport-sized Photograph"
+    ],
+    "apply_url": "https://pmjdy.gov.in",
+    "reason": "National Mission for Financial Inclusion to ensure access to financial services in an affordable manner.",
+    "evidence": [
+      {
+        "title": "Department of Financial Services - PMJDY",
+        "url": "https://pmjdy.gov.in",
+        "snippet": "Universal access to banking facilities with at least one basic banking account for every unbanked adult."
+      }
+    ]
+  },
+  {
+    "id": "pmjay",
+    "scheme": "Ayushman Bharat – PM Jan Arogya Yojana",
+    "scheme_hi": "आयुष्मान भारत – प्रधानमंत्री जन आरोग्य योजना",
+    "benefit": "₹5 Lakh/year cashless health insurance coverage per family for secondary & tertiary hospitalisation",
+    "benefit_hi": "प्रति परिवार प्रति वर्ष ₹5 लाख तक का कैशलेस स्वास्थ्य बीमा",
+    "status": "active",
+    "source_url": "https://pmjay.gov.in",
+    "last_verified": "2026-10-18",
+    "opens_on": null,
+    "closes_on": null,
+    "dates_confirmed": false,
+    "rules": {
+      "is_bpl_or_senior": true,
+      "max_annual_income": 120000
+    },
+    "documents": [
+      "Aadhaar Card",
+      "Ration Card or Family ID",
+      "BPL / Income Certificate"
+    ],
+    "apply_url": "https://pmjay.gov.in",
+    "reason": "Provides cashless treatment at empanelled public and private hospitals nationwide.",
+    "evidence": [
+      {
+        "title": "National Health Authority Portal",
+        "url": "https://pmjay.gov.in",
+        "snippet": "Covers medical and surgical procedures across specialized medical packages."
+      }
+    ]
+  },
+  {
+    "id": "pmay-g",
+    "scheme": "Pradhan Mantri Awas Yojana (Gramin)",
+    "scheme_hi": "प्रधानमंत्री आवास योजना (ग्रामीण)",
+    "benefit": "₹1.20 Lakh (plains) / ₹1.30 Lakh (hilly areas) grant for constructing a durable pucca house",
+    "benefit_hi": "पक्का मकान निर्माण हेतु ₹1.20 लाख से ₹1.30 लाख की सीधी आर्थिक सहायता",
+    "status": "active",
+    "source_url": "https://pmayg.nic.in",
+    "last_verified": "2026-10-05",
+    "opens_on": null,
+    "closes_on": null,
+    "dates_confirmed": false,
+    "rules": {
+      "is_rural": true,
+      "owns_pucca_house": false
+    },
+    "documents": [
+      "Aadhaar Card",
+      "MGNREGA Job Card",
+      "Bank Account Passbook",
+      "Land Ownership / Homestead document"
+    ],
+    "apply_url": "https://pmayg.nic.in",
+    "reason": "Ensures housing for all rural families living in kutcha or dilapidated dwellings.",
+    "evidence": [
+      {
+        "title": "Ministry of Rural Development PMAY-G",
+        "url": "https://pmayg.nic.in",
+        "snippet": "Assistance includes convergence with Swachh Bharat Mission for sanitation facilities."
+      }
+    ]
+  },
+  {
+    "id": "surya-ghar",
+    "scheme": "PM Surya Ghar: Muft Bijli Yojana",
+    "scheme_hi": "पीएम सूर्य घर: मुफ्त बिजली योजना",
+    "benefit": "Up to ₹78,000 capital subsidy for rooftop solar + up to 300 free electricity units monthly",
+    "benefit_hi": "रूफटॉप सोलर पर ₹78,000 तक की सीधी सब्सिडी + 300 यूनिट मुफ्त बिजली",
+    "status": "active",
+    "source_url": "https://pmsuryaghar.gov.in",
+    "last_verified": "2026-10-25",
+    "opens_on": null,
+    "closes_on": null,
+    "dates_confirmed": false,
+    "rules": {
+      "has_electricity_connection": true
+    },
+    "documents": [
+      "Recent Electricity Bill",
+      "Aadhaar Card",
+      "Bank Passbook (for subsidy credit)",
+      "Rooftop Photograph"
+    ],
+    "apply_url": "https://pmsuryaghar.gov.in",
+    "reason": "Government initiative to power 1 crore households with subsidized decentralized solar energy.",
+    "evidence": [
+      {
+        "title": "PM Surya Ghar Official Portal",
+        "url": "https://pmsuryaghar.gov.in",
+        "snippet": "Subsidies are credited directly to the consumer bank account upon commissioning."
+      }
+    ]
+  },
+  {
+    "id": "nsp-scholarship",
+    "scheme": "National Scholarship Portal (Central Sector Scheme)",
+    "scheme_hi": "राष्ट्रीय छात्रवृत्ति पोर्टल (केंद्रीय छात्रवृत्तियां)",
+    "benefit": "₹10,000 to ₹50,000/year scholarship allowance for graduate and post-graduate studies",
+    "benefit_hi": "उच्च शिक्षा हेतु ₹10,000 से ₹50,000 प्रति वर्ष की छात्रवृत्ति",
+    "status": "active",
+    "source_url": "https://scholarships.gov.in",
+    "last_verified": "2026-10-12",
+    "opens_on": "2026-07-01",
+    "closes_on": "2026-11-30",
+    "dates_confirmed": true,
+    "rules": {
+      "is_student": true,
+      "max_annual_income": 450000,
+      "min_age": 17,
+      "max_age": 28
+    },
+    "documents": [
+      "Aadhaar Card",
+      "Institute Bonafide Certificate",
+      "Previous Class Marksheet",
+      "Family Income Certificate",
+      "Student Bank Passbook"
+    ],
+    "apply_url": "https://scholarships.gov.in",
+    "reason": "Financial support to meritorious students from low-income families for higher education.",
+    "evidence": [
+      {
+        "title": "National Scholarship Portal Home",
+        "url": "https://scholarships.gov.in",
+        "snippet": "Single digital platform coordinating multi-ministry pre-matric and post-matric scholarship schemes."
+      }
+    ]
+  },
+  {
+    "id": "sukanya-samriddhi",
+    "scheme": "Sukanya Samriddhi Yojana",
+    "scheme_hi": "सुकन्या समृद्धि योजना",
+    "benefit": "8.2% guaranteed sovereign tax-free interest under Sec 80C for girl child higher education & marriage",
+    "benefit_hi": "बालिका हेतु 8.2% कर-मुक्त ब्याज दर एवं धारा 80C के तहत पूर्ण आयकर छूट",
+    "status": "active",
+    "source_url": "https://www.indiapost.gov.in",
+    "last_verified": "2026-10-01",
+    "opens_on": null,
+    "closes_on": null,
+    "dates_confirmed": false,
+    "rules": {
+      "has_girl_child_under_10": true
+    },
+    "documents": [
+      "Birth Certificate of the Girl Child",
+      "Parent / Guardian Aadhaar Card",
+      "Parent PAN Card",
+      "Residential Address Proof"
+    ],
+    "apply_url": "https://www.indiapost.gov.in",
+    "reason": "Long-term small savings welfare scheme under Beti Bachao Beti Padhao initiative.",
+    "evidence": [
+      {
+        "title": "India Post Small Savings Schemes",
+        "url": "https://www.indiapost.gov.in",
+        "snippet": "Minimum annual deposit is ₹250 and maximum is ₹1,50,000 in a financial year."
+      }
+    ]
+  },
+  {
+    "id": "pm-mudra",
+    "scheme": "Pradhan Mantri MUDRA Yojana",
+    "scheme_hi": "प्रधानमंत्री मुद्रा योजना",
+    "benefit": "Collateral-free micro loans up to ₹20 Lakh (Shishu, Kishore, Tarun & Tarun Plus categories)",
+    "benefit_hi": "बिना किसी गारंटी के ₹20 लाख तक का रियायती व्यावसायिक ऋण",
+    "status": "active",
+    "source_url": "https://www.mudra.org.in",
+    "last_verified": "2026-10-10",
+    "opens_on": null,
+    "closes_on": null,
+    "dates_confirmed": false,
+    "rules": {
+      "min_age": 18,
+      "is_entrepreneur_or_vendor": true
+    },
+    "documents": [
+      "Aadhaar Card",
+      "PAN Card",
+      "Business Plan / Enterprise Details",
+      "6-Month Bank Account Statement"
+    ],
+    "apply_url": "https://www.mudra.org.in",
+    "reason": "Provides institutional refinancing support to banks for lending to micro and small businesses.",
+    "evidence": [
+      {
+        "title": "MUDRA Official Guidelines",
+        "url": "https://www.mudra.org.in",
+        "snippet": "Loans are extended without requiring collateral securities to eligible small business owners."
+      }
+    ]
+  },
+  {
+    "id": "pm-vidyalaxmi-2026",
+    "scheme": "PM Vidyalaxmi Higher Education Scheme",
+    "scheme_hi": "पीएम विद्यालक्ष्मी उच्च शिक्षा योजना",
+    "benefit": "Collateral-free education loan covering full tuition + 3% interest subvention for top 860 NIRF institutes",
+    "benefit_hi": "शीर्ष 860 संस्थानों में बिना गारंटी पूरा शिक्षा ऋण व 3% ब्याज अनुदान",
+    "status": "upcoming",
+    "source_url": "https://pib.gov.in",
+    "last_verified": "2026-10-28",
+    "opens_on": "2026-12-01",
+    "closes_on": null,
+    "dates_confirmed": false,
+    "rules": {
+      "is_student": true,
+      "max_annual_income": 800000
+    },
+    "documents": [
+      "Aadhaar Card",
+      "Class 10 and 12 Academic Marksheets",
+      "NIRF Top-860 Institute Allotment / Admission Letter",
+      "Family Income Declaration"
+    ],
+    "apply_url": "https://www.vidyalakshmi.co.in",
+    "reason": "Cabinet approved landmark financial support scheme to eliminate financial barriers in higher education.",
+    "evidence": [
+      {
+        "title": "Cabinet Brief on PM-Vidyalaxmi",
+        "url": "https://pib.gov.in",
+        "snippet": "Central government to provide 75% credit guarantee for loans up to ₹7.5 Lakh."
+      }
+    ]
+  },
+  {
+    "id": "pmgkay-covid-special",
+    "scheme": "PM Garib Kalyan Anna Yojana (Covid Relief Tranche)",
+    "scheme_hi": "प्रधानमंत्री गरीब कल्याण अन्न योजना (विशेष कोविड राहत चरण)",
+    "benefit": "5 kg free foodgrains per beneficiary per month in addition to regular NFSA allocation",
+    "benefit_hi": "नियमित राशन के अतिरिक्त 5 किलो प्रतिमाह मुफ्त खाद्यान्न (कोविड चरण)",
+    "status": "ended",
+    "source_url": "https://dfpd.gov.in",
+    "last_verified": "2026-09-15",
+    "opens_on": "2020-04-01",
+    "closes_on": "2023-12-31",
+    "dates_confirmed": true,
+    "rules": {
+      "is_bpl": true
+    },
+    "documents": [
+      "NFSA Priority / Antyodaya Ration Card",
+      "Aadhaar Card"
+    ],
+    "apply_url": "https://dfpd.gov.in",
+    "reason": "Special pandemic emergency relief window; now permanently transitioned into unified 5-year free NFSA foodgrain supply.",
+    "evidence": [
+      {
+        "title": "Department of Food & Public Distribution",
+        "url": "https://dfpd.gov.in",
+        "snippet": "The emergency Covid relief tranche concluded on December 31, 2023, and converted into regular NFSA benefits."
+      }
+    ]
+  }
+]

@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --saffron: #FF6B00;
+    --saffron-light: #FFF3E8;
+    --india-green: #138808;
+    --india-green-light: #E8F5E9;
+    --navy: #1A2B5C;
+    --ashoka-blue: #1E40AF;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    @apply bg-slate-50 text-slate-800 font-sans antialiased;
+  }
+
+  /* Print styles for documents checklist */
+  @media print {
+    .no-print { display: none !important; }
+    .print-only { display: block !important; }
+    body { background: white; }
+  }
+
+  .print-only { display: none; }
+}
+
+@layer utilities {
+  .saffron-gradient {
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8C42 100%);
+  }
+  .india-gradient {
+    background: linear-gradient(135deg, #1A2B5C 0%, #1E40AF 50%, #138808 100%);
+  }
+  .card-shadow {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .pulse-mic {
+    animation: pulse-mic 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse-mic {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+    50%       { box-shadow: 0 0 0 12px rgba(239,68,68,0); }
+  }
+}

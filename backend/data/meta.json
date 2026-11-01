@@ -1,0 +1,35 @@
+{
+  "dataset_name": "Union Budget of India - Major Welfare Schemes & Sectoral Allocations",
+  "source_url": "https://www.indiabudget.gov.in/",
+  "unit": "₹ Crore",
+  "years_covered": ["2022-23", "2023-24", "2024-25"],
+  "total_schemes": 20,
+  "sectors": [
+    "Rural Development",
+    "Agriculture & Allied",
+    "Drinking Water & Sanitation",
+    "Housing & Urban Affairs",
+    "Healthcare",
+    "Education",
+    "Women & Child Development",
+    "Social Welfare"
+  ],
+  "notable_schemes": [
+    "MGNREGA",
+    "PM-KISAN",
+    "Jal Jeevan Mission",
+    "PM Awas Yojana",
+    "National Health Mission",
+    "Ayushman Bharat - PMJAY",
+    "Samagra Shiksha Abhiyan",
+    "National Scholarship Portal - NSP",
+    "Mid-Day Meal Scheme (PM POSHAN)",
+    "Saksham Anganwadi and Poshan 2.0",
+    "Beti Bachao Beti Padhao",
+    "PMGSY",
+    "NSAP",
+    "PM Janman",
+    "PMFBY"
+  ],
+  "disclaimer": "Figures are from Union Budget documents. For the latest official data visit indiabudget.gov.in."
+}

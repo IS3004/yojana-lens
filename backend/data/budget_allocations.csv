@@ -1,0 +1,61 @@
+year,sector,department,scheme_name,allocation_crores
+2022-23,Rural Development,Department of Rural Development,MGNREGA (Rural Employment),73000
+2023-24,Rural Development,Department of Rural Development,MGNREGA (Rural Employment),60000
+2024-25,Rural Development,Department of Rural Development,MGNREGA (Rural Employment),86000
+2022-23,Agriculture & Allied,Department of Agriculture and Farmers Welfare,PM-KISAN (Income Support),60000
+2023-24,Agriculture & Allied,Department of Agriculture and Farmers Welfare,PM-KISAN (Income Support),60000
+2024-25,Agriculture & Allied,Department of Agriculture and Farmers Welfare,PM-KISAN (Income Support),60000
+2022-23,Drinking Water & Sanitation,Department of Drinking Water and Sanitation,Jal Jeevan Mission (Har Ghar Jal),55000
+2023-24,Drinking Water & Sanitation,Department of Drinking Water and Sanitation,Jal Jeevan Mission (Har Ghar Jal),70000
+2024-25,Drinking Water & Sanitation,Department of Drinking Water and Sanitation,Jal Jeevan Mission (Har Ghar Jal),70163
+2022-23,Housing & Urban Affairs,Ministry of Housing and Urban Affairs,PM Awas Yojana (Rural & Urban Housing),48000
+2023-24,Housing & Urban Affairs,Ministry of Housing and Urban Affairs,PM Awas Yojana (Rural & Urban Housing),79590
+2024-25,Housing & Urban Affairs,Ministry of Housing and Urban Affairs,PM Awas Yojana (Rural & Urban Housing),80671
+2022-23,Healthcare,Department of Health and Family Welfare,National Health Mission (NHM),33700
+2023-24,Healthcare,Department of Health and Family Welfare,National Health Mission (NHM),35947
+2024-25,Healthcare,Department of Health and Family Welfare,National Health Mission (NHM),38189
+2022-23,Healthcare,Department of Health and Family Welfare,Ayushman Bharat - PMJAY (Health Cover),6400
+2023-24,Healthcare,Department of Health and Family Welfare,Ayushman Bharat - PMJAY (Health Cover),7200
+2024-25,Healthcare,Department of Health and Family Welfare,Ayushman Bharat - PMJAY (Health Cover),7500
+2022-23,Education,Department of School Education and Literacy,Samagra Shiksha Abhiyan (School Education),37383
+2023-24,Education,Department of School Education and Literacy,Samagra Shiksha Abhiyan (School Education),37453
+2024-25,Education,Department of School Education and Literacy,Samagra Shiksha Abhiyan (School Education),37500
+2022-23,Women & Child Development,Ministry of Women and Child Development,Saksham Anganwadi and Poshan 2.0,20263
+2023-24,Women & Child Development,Ministry of Women and Child Development,Saksham Anganwadi and Poshan 2.0,20554
+2024-25,Women & Child Development,Ministry of Women and Child Development,Saksham Anganwadi and Poshan 2.0,21200
+2022-23,Rural Development,Department of Rural Development,Pradhan Mantri Gram Sadak Yojana (PMGSY),19000
+2023-24,Rural Development,Department of Rural Development,Pradhan Mantri Gram Sadak Yojana (PMGSY),19000
+2024-25,Rural Development,Department of Rural Development,Pradhan Mantri Gram Sadak Yojana (PMGSY),12000
+2022-23,Social Welfare,Department of Social Justice and Empowerment,National Social Assistance Programme (NSAP Pensions),9652
+2023-24,Social Welfare,Department of Social Justice and Empowerment,National Social Assistance Programme (NSAP Pensions),9636
+2024-25,Social Welfare,Department of Social Justice and Empowerment,National Social Assistance Programme (NSAP Pensions),9652
+2022-23,Agriculture & Allied,Department of Agriculture and Farmers Welfare,Modified Interest Subvention Scheme (Farmers Credit),19500
+2023-24,Agriculture & Allied,Department of Agriculture and Farmers Welfare,Modified Interest Subvention Scheme (Farmers Credit),23000
+2024-25,Agriculture & Allied,Department of Agriculture and Farmers Welfare,Modified Interest Subvention Scheme (Farmers Credit),22600
+2022-23,Education,Ministry of Education,National Scholarship Portal - NSP (Pre & Post Matric),3250
+2023-24,Education,Ministry of Education,National Scholarship Portal - NSP (Pre & Post Matric),3400
+2024-25,Education,Ministry of Education,National Scholarship Portal - NSP (Pre & Post Matric),3553
+2022-23,Education,Ministry of Education,Mid-Day Meal Scheme (PM POSHAN - School Nutrition),12800
+2023-24,Education,Ministry of Education,Mid-Day Meal Scheme (PM POSHAN - School Nutrition),12467
+2024-25,Education,Ministry of Education,Mid-Day Meal Scheme (PM POSHAN - School Nutrition),12501
+2022-23,Education,University Grants Commission (UGC),Higher Education Financing Agency & Scholarships (UGC),4600
+2023-24,Education,University Grants Commission (UGC),Higher Education Financing Agency & Scholarships (UGC),4750
+2024-25,Education,University Grants Commission (UGC),Higher Education Financing Agency & Scholarships (UGC),4993
+2022-23,Social Welfare,Ministry of Tribal Affairs,PM Janman - Tribal Welfare & Scholarship Scheme,2500
+2023-24,Social Welfare,Ministry of Tribal Affairs,PM Janman - Tribal Welfare & Scholarship Scheme,4000
+2024-25,Social Welfare,Ministry of Tribal Affairs,PM Janman - Tribal Welfare & Scholarship Scheme,6000
+2022-23,Social Welfare,Department of Empowerment of Persons with Disabilities,Scholarships for Persons with Disabilities (DEPWD),350
+2023-24,Social Welfare,Department of Empowerment of Persons with Disabilities,Scholarships for Persons with Disabilities (DEPWD),400
+2024-25,Social Welfare,Department of Empowerment of Persons with Disabilities,Scholarships for Persons with Disabilities (DEPWD),450
+2022-23,Healthcare,Department of Health and Family Welfare,Pradhan Mantri Surakshit Matritva Abhiyan (PMSMA),400
+2023-24,Healthcare,Department of Health and Family Welfare,Pradhan Mantri Surakshit Matritva Abhiyan (PMSMA),450
+2024-25,Healthcare,Department of Health and Family Welfare,Pradhan Mantri Surakshit Matritva Abhiyan (PMSMA),500
+2022-23,Agriculture & Allied,Department of Agriculture and Farmers Welfare,Pradhan Mantri Fasal Bima Yojana (PMFBY - Crop Insurance),15500
+2023-24,Agriculture & Allied,Department of Agriculture and Farmers Welfare,Pradhan Mantri Fasal Bima Yojana (PMFBY - Crop Insurance),13625
+2024-25,Agriculture & Allied,Department of Agriculture and Farmers Welfare,Pradhan Mantri Fasal Bima Yojana (PMFBY - Crop Insurance),14600
+2022-23,Women & Child Development,Ministry of Women and Child Development,Beti Bachao Beti Padhao (BBBP) & Mission Shakti,1200
+2023-24,Women & Child Development,Ministry of Women and Child Development,Beti Bachao Beti Padhao (BBBP) & Mission Shakti,1750
+2024-25,Women & Child Development,Ministry of Women and Child Development,Beti Bachao Beti Padhao (BBBP) & Mission Shakti,2000
+2022-23,Housing & Urban Affairs,Ministry of Housing and Urban Affairs,Smart Cities Mission & AMRUT 2.0,8000
+2023-24,Housing & Urban Affairs,Ministry of Housing and Urban Affairs,Smart Cities Mission & AMRUT 2.0,8000
+2024-25,Housing & Urban Affairs,Ministry of Housing and Urban Affairs,Smart Cities Mission & AMRUT 2.0,7300
