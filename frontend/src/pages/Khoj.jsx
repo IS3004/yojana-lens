@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import {
   Printer, RefreshCw, Bot, User, Clock, XCircle, Share2,
-  Camera, Upload, AlertCircle, Sparkles, CheckCircle2
+  Camera, AlertCircle, Sparkles, CheckCircle2, Lightbulb
 } from 'lucide-react'
 import { useLang } from '../i18n/strings'
 import client, { useMock } from '../api/client'
@@ -10,10 +10,12 @@ import ChatBox from '../components/ChatBox'
 import ProfileChips from '../components/ProfileChips'
 import SchemeCard from '../components/SchemeCard'
 import Disclaimer from '../components/Disclaimer'
-import Loader from '../components/Loader'
+import Skeleton from '../components/ui/Skeleton'
+import EmptyState from '../components/ui/EmptyState'
 
 export default function Khoj() {
   const { lang, t } = useLang()
+  const isHi = lang === 'hi'
 
   // State
   const [messages, setMessages] = useState([])
@@ -94,7 +96,6 @@ export default function Khoj() {
 
       let extractedProfile
       if (useMock) {
-        // Fast mock extraction simulating document read without storing ID numbers
         await new Promise((r) => setTimeout(r, 1200))
         extractedProfile = {
           ...profile,
@@ -186,47 +187,51 @@ export default function Khoj() {
   )
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
+    <div className="max-w-6xl mx-auto px-4 py-8 sm:py-10 space-y-8">
       {/* Header */}
-      <div className="space-y-1">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2">
-          <span>Khoj (खोज)</span>
-          <span className="text-xs px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-800 font-semibold">
-            Eligibility & Scheme Timeline
+      <div className="space-y-2">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight">
+            {isHi ? 'खोज (Khoj) — योजना अन्वेषक' : 'Khoj (खोज) — Scheme Finder'}
+          </h1>
+          <span className="text-xs px-3 py-1 rounded-full bg-saffron-tint text-saffron font-bold border border-saffron/30">
+            Eligibility & Official Timelines
           </span>
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-500">
-          Describe your situation in any Indian language. Explore active schemes, upcoming launches, and almost-eligible opportunities.
+        </div>
+        <p className="text-xs sm:text-sm text-muted max-w-3xl leading-relaxed">
+          {isHi
+            ? 'अपनी स्थिति किसी भी भारतीय भाषा में बताएं या दस्तावेज़ फोटो जोड़ें। नियम इंजन आपकी पात्रता सत्यापित करेगा और सक्रिय व आगामी योजनाएं दिखाएगा।'
+            : 'Describe your situation in any Indian language. Pure Python logic matches your profile against verified welfare schemes with deadlines and official links.'}
         </p>
       </div>
 
       {/* Chat Messages Log */}
       {messages.length > 0 && (
-        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3 max-h-60 overflow-y-auto">
+        <div className="bg-slate-100/70 border border-border rounded-2xl p-4 sm:p-5 space-y-3.5 max-h-72 overflow-y-auto">
           {messages.map((m, idx) => (
             <div
               key={idx}
-              className={`flex items-start gap-2 text-xs sm:text-sm ${
+              className={`flex items-start gap-2.5 text-xs sm:text-sm ${
                 m.role === 'user' ? 'justify-end' : 'justify-start'
               }`}
             >
               {m.role === 'assistant' && (
-                <div className="w-6 h-6 rounded-full bg-orange-600 text-white flex items-center justify-center shrink-0 mt-0.5">
-                  <Bot size={13} />
+                <div className="w-7 h-7 rounded-full bg-navy text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                  <Bot size={15} />
                 </div>
               )}
               <div
-                className={`p-3 rounded-2xl max-w-[85%] leading-relaxed ${
+                className={`p-3.5 rounded-2xl max-w-[85%] leading-relaxed ${
                   m.role === 'user'
-                    ? 'bg-orange-600 text-white rounded-tr-none'
-                    : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none shadow-xs'
+                    ? 'bg-saffron-tint border border-saffron/30 text-navy font-medium rounded-tr-none shadow-2xs'
+                    : 'bg-white border border-border text-navy rounded-tl-none shadow-card'
                 }`}
               >
                 {m.text}
               </div>
               {m.role === 'user' && (
-                <div className="w-6 h-6 rounded-full bg-slate-400 text-white flex items-center justify-center shrink-0 mt-0.5">
-                  <User size={13} />
+                <div className="w-7 h-7 rounded-full bg-saffron text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                  <User size={15} />
                 </div>
               )}
             </div>
@@ -235,7 +240,7 @@ export default function Khoj() {
       )}
 
       {/* Input Box & Photo Prefill CTA */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-3">
+      <div className="bg-surface rounded-2xl border border-border p-5 shadow-card space-y-4">
         <ChatBox
           onSend={(text) => processQuery(text, profile)}
           loading={loading}
@@ -243,7 +248,7 @@ export default function Khoj() {
           onSelectStarter={(t) => processQuery(t, profile)}
         />
 
-        <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-border">
           <input
             type="file"
             ref={fileInputRef}
@@ -255,19 +260,19 @@ export default function Khoj() {
             type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={uploadingDoc || loading}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-orange-50 text-orange-700 border border-orange-200 hover:bg-orange-100 transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-xl bg-saffron-tint text-saffron border border-saffron/30 hover:bg-saffron/15 transition-all disabled:opacity-50 cursor-pointer shadow-2xs"
           >
-            <Camera size={14} />
+            <Camera size={15} />
             <span>{uploadingDoc ? t.khoj.uploadingDoc : t.khoj.uploadDocPhoto}</span>
           </button>
-          <span className="text-[11px] text-slate-400">
-            Privacy-safe OCR: identity numbers (Aadhaar/Ration) are never recorded
+          <span className="text-[11px] text-muted">
+            🛡️ Privacy safe: ID numbers (Aadhaar/Ration) are never stored or logged
           </span>
         </div>
       </div>
 
       {/* Profile Chips Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
         <ProfileChips
           profile={profile}
           onRemove={handleRemoveChip}
@@ -275,13 +280,14 @@ export default function Khoj() {
         />
         {Object.keys(profile).length > 0 && (
           <button
+            type="button"
             onClick={() => {
               setProfile({})
               setResults([])
               setNearMisses([])
               setMessages([])
             }}
-            className="text-xs text-slate-400 hover:text-rose-600 font-medium transition-colors shrink-0"
+            className="text-xs text-muted hover:text-danger font-semibold transition-colors shrink-0 cursor-pointer"
           >
             {t.khoj.clearProfile}
           </button>
@@ -290,47 +296,60 @@ export default function Khoj() {
 
       {/* Error State */}
       {error && (
-        <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 text-xs sm:text-sm text-rose-800 flex items-center justify-between">
+        <div className="bg-danger-tint border border-danger/40 rounded-xl p-4 text-xs sm:text-sm text-danger flex items-center justify-between">
           <span>{error}</span>
           <button
+            type="button"
             onClick={() => processQuery(lastQuery, profile)}
-            className="inline-flex items-center gap-1 font-bold text-rose-900 underline hover:no-underline"
+            className="inline-flex items-center gap-1 font-bold underline hover:no-underline cursor-pointer"
           >
-            <RefreshCw size={12} /> {t.khoj.retry}
+            <RefreshCw size={13} /> {t.khoj.retry}
           </button>
         </div>
       )}
 
-      {/* Loading State */}
-      {loading && <Loader message="Evaluating rules and verifying official scheme timelines..." />}
+      {/* Loading Skeleton */}
+      {loading && (
+        <div className="space-y-4">
+          <p className="text-xs font-bold text-muted uppercase tracking-wider">
+            {t.khoj.loading || 'Finding schemes…'}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <Skeleton className="h-56" count={2} />
+          </div>
+        </div>
+      )}
 
       {/* Matched Results Section */}
       {!loading && results.length > 0 && (
-        <div className="space-y-4 pt-2">
+        <div className="space-y-5 pt-2">
           {/* Header & Actions */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface p-4 rounded-2xl border border-border shadow-2xs">
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-slate-900">
-                Matched Welfare Programs ({results.length})
+              <h2 className="text-base sm:text-lg font-bold text-navy flex items-center gap-2">
+                <span>Matched Welfare Programs ({results.length})</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-verified" />
               </h2>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-muted">
                 Strict Python rule matching — official source verified
               </p>
             </div>
             <div className="flex items-center gap-2">
               <button
+                type="button"
                 onClick={handleShareWhatsApp}
-                className="no-print inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-xs font-semibold text-emerald-800 shadow-2xs transition-colors shrink-0"
+                className="no-print inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-emerald-verified/40 bg-emerald-tint hover:bg-emerald-tint/80 text-xs font-bold text-emerald-verified shadow-2xs transition-all cursor-pointer"
               >
-                <Share2 size={13} />
+                <Share2 size={14} />
                 <span>{t.khoj.shareWhatsApp}</span>
               </button>
               {allDocuments.length > 0 && (
                 <button
+                  type="button"
                   onClick={() => window.print()}
-                  className="no-print inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 shadow-2xs transition-colors shrink-0"
+                  className="no-print inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-border bg-white hover:bg-slate-50 text-xs font-bold text-navy shadow-2xs transition-all cursor-pointer"
                 >
-                  <Printer size={13} />
+                  <Printer size={14} />
                   <span>{t.khoj.downloadDocs}</span>
                 </button>
               )}
@@ -338,62 +357,66 @@ export default function Khoj() {
           </div>
 
           {/* Timeline Status Filter Tabs */}
-          <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-2">
+          <div className="flex flex-wrap items-center gap-2 border-b border-border pb-3">
             <button
+              type="button"
               onClick={() => setActiveTab('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                 activeTab === 'all'
-                  ? 'bg-slate-900 text-white shadow-xs'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? 'bg-navy text-white shadow-xs'
+                  : 'bg-white text-muted hover:bg-slate-100 border border-border'
               }`}
             >
               <span>{t.khoj.filterTabs?.all || 'All Schemes'}</span>
-              <span className={`text-[11px] px-1.5 py-0.2 rounded-full ${activeTab === 'all' ? 'bg-slate-700 text-white' : 'bg-slate-200 text-slate-700'}`}>
+              <span className={`text-[11px] px-2 py-0.5 rounded-full ${activeTab === 'all' ? 'bg-white/20 text-white' : 'bg-slate-100 text-navy'}`}>
                 {totalCount}
               </span>
             </button>
 
             <button
+              type="button"
               onClick={() => setActiveTab('active')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                 activeTab === 'active'
-                  ? 'bg-emerald-700 text-white shadow-xs'
-                  : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200/60'
+                  ? 'bg-emerald-verified text-white shadow-xs'
+                  : 'bg-emerald-tint text-emerald-verified hover:bg-emerald-tint/80 border border-emerald-verified/30'
               }`}
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span className="w-2 h-2 rounded-full bg-emerald-300" />
               <span>{t.khoj.filterTabs?.active || 'Available Now'}</span>
-              <span className={`text-[11px] px-1.5 py-0.2 rounded-full ${activeTab === 'active' ? 'bg-emerald-800 text-white' : 'bg-emerald-100 text-emerald-900'}`}>
+              <span className={`text-[11px] px-2 py-0.5 rounded-full ${activeTab === 'active' ? 'bg-white/20 text-white' : 'bg-white text-emerald-verified'}`}>
                 {activeCount}
               </span>
             </button>
 
             <button
+              type="button"
               onClick={() => setActiveTab('upcoming')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                 activeTab === 'upcoming'
-                  ? 'bg-blue-700 text-white shadow-xs'
-                  : 'bg-blue-50 text-blue-800 hover:bg-blue-100 border border-blue-200/60'
+                  ? 'bg-info text-white shadow-xs'
+                  : 'bg-info-tint text-info hover:bg-info-tint/80 border border-info/30'
               }`}
             >
-              <Clock size={12} />
+              <Clock size={13} />
               <span>{t.khoj.filterTabs?.upcoming || 'Upcoming'}</span>
-              <span className={`text-[11px] px-1.5 py-0.2 rounded-full ${activeTab === 'upcoming' ? 'bg-blue-800 text-white' : 'bg-blue-100 text-blue-900'}`}>
+              <span className={`text-[11px] px-2 py-0.5 rounded-full ${activeTab === 'upcoming' ? 'bg-white/20 text-white' : 'bg-white text-info'}`}>
                 {upcomingCount}
               </span>
             </button>
 
             <button
+              type="button"
               onClick={() => setActiveTab('ended')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                 activeTab === 'ended'
                   ? 'bg-slate-700 text-white shadow-xs'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200'
+                  : 'bg-white text-muted hover:bg-slate-100 border border-border'
               }`}
             >
-              <XCircle size={12} />
+              <XCircle size={13} />
               <span>{t.khoj.filterTabs?.ended || 'Closed / Past'}</span>
-              <span className={`text-[11px] px-1.5 py-0.2 rounded-full ${activeTab === 'ended' ? 'bg-slate-600 text-white' : 'bg-slate-200 text-slate-700'}`}>
+              <span className={`text-[11px] px-2 py-0.5 rounded-full ${activeTab === 'ended' ? 'bg-white/20 text-white' : 'bg-slate-100 text-muted'}`}>
                 {endedCount}
               </span>
             </button>
@@ -407,25 +430,28 @@ export default function Khoj() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-8 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-500">
-              No schemes found in this timeline category. Switch tabs to view other programs.
+            <div className="text-center py-10 bg-surface border border-border rounded-2xl text-xs text-muted shadow-2xs">
+              No schemes found in this timeline category. Switch tabs above to view other programs.
             </div>
           )}
         </div>
       )}
 
-      {/* Almost Eligible View (Phase 1b) */}
+      {/* Almost Eligible View */}
       {!loading && nearMisses.length > 0 && (
-        <div className="space-y-3 pt-6 border-t border-amber-200">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 bg-amber-100 rounded-lg text-amber-800">
-              <AlertCircle size={18} />
+        <div className="space-y-4 pt-6 border-t border-info/30">
+          <div className="flex items-center gap-2.5">
+            <span className="p-2 bg-info-tint rounded-xl text-info">
+              <Lightbulb size={20} />
             </span>
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-slate-900">
-                {t.khoj.almostEligible} ({nearMisses.length})
+              <h2 className="text-base sm:text-lg font-bold text-navy flex items-center gap-2">
+                <span>{t.khoj.almostEligible} ({nearMisses.length})</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-info-tint text-info font-bold border border-info/30">
+                  1 Condition Away
+                </span>
               </h2>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-muted">
                 {t.khoj.almostEligibleDesc}
               </p>
             </div>
@@ -441,24 +467,22 @@ export default function Khoj() {
 
       {/* Empty State */}
       {!loading && !error && results.length === 0 && nearMisses.length === 0 && (
-        <div className="text-center py-12 px-4 border border-dashed border-slate-200 rounded-2xl bg-white space-y-3">
-          <div className="text-3xl">🌾</div>
-          <p className="text-sm text-slate-500 max-w-sm mx-auto">
-            {t.khoj.noResults}
-          </p>
-        </div>
+        <EmptyState
+          title={isHi ? 'अभी तक कोई मिलान नहीं' : 'No matching schemes yet'}
+          description={t.khoj.noResults}
+        />
       )}
 
       {/* Print-Only Document Checklist Sheet */}
-      <div className="print-only p-8">
-        <h1 className="text-2xl font-bold mb-2">YojanaLens — Required Documents Checklist</h1>
-        <p className="text-sm text-slate-600 mb-6">
+      <div className="print-only p-8 bg-white">
+        <h1 className="text-2xl font-bold mb-2 text-black">YojanaLens — Required Documents Checklist</h1>
+        <p className="text-sm text-gray-600 mb-6">
           Official document checklist compiled for your profile. Please prepare these documents before visiting the government office.
         </p>
         <ul className="space-y-3 text-base">
           {allDocuments.map((doc, idx) => (
-            <li key={idx} className="flex items-center gap-3">
-              <span className="w-5 h-5 border-2 border-slate-800 rounded inline-block" />
+            <li key={idx} className="flex items-center gap-3 text-black">
+              <span className="w-5 h-5 border-2 border-black rounded inline-block" />
               <span>{doc}</span>
             </li>
           ))}

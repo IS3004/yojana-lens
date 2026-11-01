@@ -9,7 +9,7 @@ export default function ChatBox({
   starterChips = [],
   onSelectStarter,
 }) {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const [text, setText] = useState('')
   const [listening, setListening] = useState(false)
 
@@ -26,27 +26,10 @@ export default function ChatBox({
 
   return (
     <div className="w-full space-y-3">
-      {/* Starter chips */}
-      {starterChips.length > 0 && (
-        <div className="flex flex-wrap items-center gap-1.5 pt-1">
-          <span className="text-xs text-slate-400 font-medium">Try:</span>
-          {starterChips.map((chip, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => onSelectStarter(chip.text)}
-              className="text-xs px-2.5 py-1 rounded-full bg-slate-100 hover:bg-orange-50 hover:text-orange-700 text-slate-600 transition-colors border border-slate-200"
-            >
-              {chip.label}
-            </button>
-          ))}
-        </div>
-      )}
-
       {/* Input container */}
       <form
         onSubmit={handleSubmit}
-        className="relative flex items-center gap-2 bg-white rounded-2xl border border-slate-300 p-2 shadow-sm focus-within:ring-2 focus-within:ring-orange-500 focus-within:border-transparent transition-all"
+        className="relative flex items-center gap-2 bg-surface rounded-2xl border border-border p-2 shadow-card focus-within:border-saffron focus-within:ring-2 focus-within:ring-saffron/20 transition-all"
       >
         <VoiceButton
           onResult={handleVoiceResult}
@@ -60,17 +43,38 @@ export default function ChatBox({
           onChange={(e) => setText(e.target.value)}
           placeholder={t.khoj.placeholder}
           disabled={loading}
-          className="w-full text-sm text-slate-800 placeholder-slate-400 bg-transparent outline-none px-2 py-1.5"
+          aria-label={t.khoj.placeholder}
+          className="w-full text-sm text-navy placeholder:text-muted/70 bg-transparent outline-none px-2 py-2 min-h-[44px]"
         />
 
         <button
           type="submit"
           disabled={!text.trim() || loading}
-          className="flex items-center justify-center p-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 disabled:bg-slate-200 text-white disabled:text-slate-400 transition-colors shrink-0"
+          aria-label={t.khoj.send || 'Send'}
+          className="min-w-[48px] min-h-[48px] w-12 h-12 flex items-center justify-center rounded-xl bg-saffron hover:bg-saffron-hover disabled:opacity-40 text-white transition-all shrink-0 cursor-pointer shadow-xs active:scale-95"
         >
-          <Send size={16} />
+          <Send size={18} />
         </button>
       </form>
+
+      {/* Starter persona chips below input */}
+      {starterChips.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2 pt-1">
+          <span className="text-xs text-muted font-semibold">
+            {lang === 'hi' ? 'सुझाव:' : 'Try:'}
+          </span>
+          {starterChips.map((chip, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => onSelectStarter(chip.text)}
+              className="text-xs px-3 py-1.5 rounded-full bg-white hover:bg-saffron-tint hover:border-saffron/50 hover:text-saffron text-navy transition-all border border-border font-medium shadow-2xs cursor-pointer"
+            >
+              {chip.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

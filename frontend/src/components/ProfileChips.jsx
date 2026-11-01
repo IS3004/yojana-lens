@@ -9,7 +9,7 @@ const CHIP_FIELDS = [
   { key: 'occupation', label: () => 'Occupation',   format: (v) => v },
   { key: 'is_rural', label: (t) => t.chips.rural,   format: (v) => v ? '✓' : null },
   { key: 'is_bpl',   label: (t) => t.chips.bpl,     format: (v) => v ? '✓' : null },
-  { key: 'annual_income', label: () => 'Income',    format: (v) => v ? `₹${Number(v).toLocaleString('en-IN')}` : null },
+  { key: 'annual_income', label: () => 'Income',    format: (v) => v ? `₹${new Intl.NumberFormat('en-IN').format(v)}` : null },
 ]
 
 export default function ProfileChips({ profile, onRemove, onRerun }) {
@@ -32,22 +32,23 @@ export default function ProfileChips({ profile, onRemove, onRerun }) {
 
   return (
     <div className="flex flex-wrap gap-2 items-center">
-      <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-        {t.khoj.profileLabel}
+      <span className="text-xs font-bold text-muted uppercase tracking-wider">
+        {t.khoj.profileLabel}:
       </span>
       {chips.map(({ key, label, value }) => (
         <span
           key={key}
-          className="inline-flex items-center gap-1 bg-orange-50 border border-orange-200 text-orange-800 text-xs px-2.5 py-1 rounded-full font-medium"
+          className="inline-flex items-center gap-1.5 bg-saffron-tint/70 border border-saffron/30 text-navy text-xs px-3 py-1 rounded-full font-semibold transition-all shadow-2xs hover:border-saffron"
         >
-          <span className="text-orange-500">{label}:</span>
-          {value}
+          <span className="text-saffron font-bold">{label}:</span>
+          <span>{value}</span>
           <button
+            type="button"
             onClick={() => { onRemove(key); onRerun?.() }}
-            className="ml-0.5 text-orange-400 hover:text-orange-700"
+            className="ml-1 p-0.5 rounded-full hover:bg-saffron/20 text-muted hover:text-danger transition-colors cursor-pointer"
             aria-label={`Remove ${label}`}
           >
-            <X size={11} />
+            <X size={13} />
           </button>
         </span>
       ))}

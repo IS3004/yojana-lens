@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import {
   ShieldAlert, ShieldCheck, FileText, Volume2, VolumeX,
-  Type, Upload, ExternalLink, Calendar, CheckCircle2,
-  AlertTriangle, Copy, Check, ArrowRight
+  Type, Upload, Calendar, CheckCircle2,
+  AlertTriangle, Copy, Check, Lock, PhoneCall
 } from 'lucide-react'
 import { useLang } from '../i18n/strings'
 import client, { useMock } from '../api/client'
@@ -12,9 +12,11 @@ import Disclaimer from '../components/Disclaimer'
 
 export default function Parakh() {
   const { lang, t } = useLang()
+  const isHi = lang === 'hi'
 
   // Mode: 'claim' | 'simplify'
   const [mode, setMode] = useState('claim')
+  const [noticeMobileTab, setNoticeMobileTab] = useState('simplified') // 'original' | 'simplified'
 
   // Claim checking state
   const [claimText, setClaimText] = useState('')
@@ -30,6 +32,7 @@ export default function Parakh() {
   const [simplifyError, setSimplifyError] = useState(null)
   const [isReadingAloud, setIsReadingAloud] = useState(false)
   const [isLargeText, setIsLargeText] = useState(false)
+  const [copiedNotice, setCopiedNotice] = useState(false)
   const noticeFileInputRef = useRef(null)
 
   // Sample claims for quick test
@@ -63,7 +66,6 @@ export default function Parakh() {
     try {
       if (useMock && !uploadedFile) {
         const res = await mockVerify({ text: textToVerify, lang })
-        // Add plain code mock link check
         const hasExternal = textToVerify.includes('bit.ly') || textToVerify.includes('http')
         const link_flags = hasExternal ? [
           { url: 'http://bit.ly/free-schemes-now', is_official: false, reason: 'Non-government external link; high phishing risk' }
@@ -153,7 +155,7 @@ export default function Parakh() {
     }
 
     if (!simplifiedResult?.summary) return
-    const textToRead = `${simplifiedResult.summary}. Key Action items: ${simplifiedResult.action_items.join('. ')}`
+    const textToRead = `${simplifiedResult.summary}. Key Action items: ${simplifiedResult.action_items?.join('. ') || ''}`
     const utterance = new SpeechSynthesisUtterance(textToRead)
     utterance.lang = lang === 'hi' ? 'hi-IN' : 'en-IN'
     utterance.rate = 0.95
@@ -165,44 +167,56 @@ export default function Parakh() {
     setIsReadingAloud(true)
   }
 
+  const handleCopyNoticeSummary = () => {
+    if (!simplifiedResult) return
+    const text = `[YojanaLens Simplified Notice Summary]\n\n${simplifiedResult.summary}\n\nKey Dates:\n${simplifiedResult.key_dates?.map(d => `- ${d.date}: ${d.what}`).join('\n') || 'None'}\n\nAction Items:\n${simplifiedResult.action_items?.map(a => `- ${a}`).join('\n') || 'None'}`
+    navigator.clipboard.writeText(text)
+    setCopiedNotice(true)
+    setTimeout(() => setCopiedNotice(false), 2000)
+  }
+
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 space-y-8">
-      {/* Title & Mode Switcher */}
+    <div className="max-w-6xl mx-auto px-4 py-8 sm:py-10 space-y-8">
+      {/* Title & Segmented Mode Switcher */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2">
-            <span>Parakh (परख)</span>
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">
-              Truth & Clarity Engine
+        <div className="space-y-1">
+          <div className="flex items-center gap-2.5">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight">
+              {isHi ? 'परख (Parakh) — सत्य व परिपत्र विश्लेषक' : 'Parakh (परख) — Claim & Notice Checker'}
+            </h1>
+            <span className="text-xs px-3 py-1 rounded-full bg-emerald-tint text-emerald-verified font-bold border border-emerald-verified/30">
+              PIB & Official Verification
             </span>
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          </div>
+          <p className="text-xs sm:text-sm text-muted">
             {mode === 'claim' ? t.parakh.subtitle : t.parakh.simplifySubtitle}
           </p>
         </div>
 
-        {/* Mode Switch Pills */}
-        <div className="inline-flex rounded-xl p-1 bg-slate-100 border border-slate-200 self-start sm:self-auto">
+        {/* Segmented Control "Check a claim | Simplify a notice" */}
+        <div className="inline-flex rounded-xl p-1 bg-white border border-border shadow-2xs self-start sm:self-auto">
           <button
+            type="button"
             onClick={() => setMode('claim')}
-            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
               mode === 'claim'
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-navy text-white shadow-xs'
+                : 'text-muted hover:text-navy hover:bg-slate-50'
             }`}
           >
-            <ShieldCheck size={14} className={mode === 'claim' ? 'text-emerald-600' : ''} />
+            <ShieldCheck size={15} className={mode === 'claim' ? 'text-emerald-verified' : ''} />
             <span>{t.parakh.modeCheck}</span>
           </button>
           <button
+            type="button"
             onClick={() => setMode('simplify')}
-            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
               mode === 'simplify'
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-navy text-white shadow-xs'
+                : 'text-muted hover:text-navy hover:bg-slate-50'
             }`}
           >
-            <FileText size={14} className={mode === 'simplify' ? 'text-orange-600' : ''} />
+            <FileText size={15} className={mode === 'simplify' ? 'text-saffron' : ''} />
             <span>{t.parakh.modeSimplify}</span>
           </button>
         </div>
@@ -211,22 +225,22 @@ export default function Parakh() {
       {/* ────────────────── MODE 1: CLAIM CHECKER ────────────────── */}
       {mode === 'claim' && (
         <div className="space-y-6">
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
+          <div className="bg-surface border border-border rounded-2xl p-5 sm:p-6 shadow-card space-y-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                Forwarded message or rumor claim
+              <label className="text-xs font-bold uppercase tracking-wider text-muted">
+                Forwarded message, WhatsApp rumor, or scheme claim
               </label>
               <textarea
                 rows={4}
                 value={claimText}
                 onChange={(e) => setClaimText(e.target.value)}
                 placeholder={t.parakh.placeholder}
-                className="w-full text-sm text-slate-800 placeholder-slate-400 border border-slate-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                className="w-full text-sm text-navy placeholder:text-muted/70 border border-border rounded-xl p-3.5 focus-visible:outline-3 focus-visible:outline-saffron focus-visible:outline-offset-2 transition-all bg-white"
               />
             </div>
 
-            {/* File Upload & Samples */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-slate-100">
+            {/* File Upload & Verify Button */}
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-border">
               <div className="flex items-center gap-2">
                 <input
                   type="file"
@@ -242,21 +256,22 @@ export default function Parakh() {
                   type="button"
                   onClick={() => claimFileInputRef.current?.click()}
                   disabled={claimLoading}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition-colors"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-navy transition-colors cursor-pointer border border-border"
                 >
-                  <Upload size={13} />
+                  <Upload size={14} />
                   <span>Upload screenshot / PDF</span>
                 </button>
               </div>
 
               <button
+                type="button"
                 onClick={() => handleVerify(claimText)}
                 disabled={!claimText.trim() || claimLoading}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-200 text-white disabled:text-slate-400 font-semibold text-xs shadow-sm transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-saffron hover:bg-saffron-hover disabled:opacity-50 text-white font-bold text-xs shadow-xs transition-all cursor-pointer min-h-[48px]"
               >
                 {claimLoading ? (
                   <>
-                    <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     <span>{t.parakh.verifying}</span>
                   </>
                 ) : (
@@ -269,8 +284,8 @@ export default function Parakh() {
             </div>
 
             {/* Quick Sample Links */}
-            <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-slate-400">
-              <span>Test samples:</span>
+            <div className="flex flex-wrap items-center gap-2 pt-2 text-xs text-muted">
+              <span className="font-semibold">Quick test:</span>
               {sampleMessages.map((sample, i) => (
                 <button
                   key={i}
@@ -279,7 +294,7 @@ export default function Parakh() {
                     setClaimText(sample.text)
                     handleVerify(sample.text)
                   }}
-                  className="text-xs px-2.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+                  className="text-xs px-3 py-1.5 rounded-full bg-slate-100 hover:bg-saffron-tint hover:border-saffron/40 hover:text-saffron text-navy transition-all border border-border font-medium cursor-pointer"
                 >
                   {sample.label}
                 </button>
@@ -288,7 +303,7 @@ export default function Parakh() {
           </div>
 
           {claimError && (
-            <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 text-xs text-rose-800">
+            <div className="bg-danger-tint border border-danger/40 rounded-xl p-4 text-xs sm:text-sm text-danger">
               {claimError}
             </div>
           )}
@@ -300,9 +315,9 @@ export default function Parakh() {
       {/* ────────────────── MODE 2: NOTICE SIMPLIFIER ────────────────── */}
       {mode === 'simplify' && (
         <div className="space-y-6">
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
+          <div className="bg-surface border border-border rounded-2xl p-5 sm:p-6 shadow-card space-y-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              <label className="text-xs font-bold uppercase tracking-wider text-muted">
                 Official Government Notification or Gazette Text
               </label>
               <textarea
@@ -310,11 +325,11 @@ export default function Parakh() {
                 value={noticeText}
                 onChange={(e) => setNoticeText(e.target.value)}
                 placeholder={t.parakh.simplifyPlaceholder}
-                className="w-full text-sm text-slate-800 placeholder-slate-400 border border-slate-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                className="w-full text-sm text-navy placeholder:text-muted/70 border border-border rounded-xl p-3.5 focus-visible:outline-3 focus-visible:outline-saffron focus-visible:outline-offset-2 transition-all bg-white"
               />
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-slate-100">
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-border">
               <input
                 type="file"
                 ref={noticeFileInputRef}
@@ -329,20 +344,21 @@ export default function Parakh() {
                 type="button"
                 onClick={() => noticeFileInputRef.current?.click()}
                 disabled={simplifyLoading}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-50 hover:bg-orange-100 text-xs font-semibold text-orange-800 border border-orange-200 transition-colors"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-saffron-tint hover:bg-saffron/20 text-xs font-semibold text-saffron border border-saffron/30 transition-colors cursor-pointer"
               >
-                <Upload size={13} />
+                <Upload size={14} />
                 <span>Upload Circular PDF / Image</span>
               </button>
 
               <button
+                type="button"
                 onClick={() => handleSimplify(noticeText)}
                 disabled={!noticeText.trim() || simplifyLoading}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 disabled:bg-slate-200 text-white disabled:text-slate-400 font-semibold text-xs shadow-sm transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-saffron hover:bg-saffron-hover disabled:opacity-50 text-white font-bold text-xs shadow-xs transition-all cursor-pointer min-h-[48px]"
               >
                 {simplifyLoading ? (
                   <>
-                    <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     <span>{t.parakh.simplifying}</span>
                   </>
                 ) : (
@@ -356,113 +372,151 @@ export default function Parakh() {
           </div>
 
           {simplifyError && (
-            <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 text-xs text-rose-800">
+            <div className="bg-danger-tint border border-danger/40 rounded-xl p-4 text-xs sm:text-sm text-danger">
               {simplifyError}
             </div>
           )}
 
-          {/* Side-by-Side Original vs Simplified View */}
+          {/* Original vs Simplified Notice Breakdown */}
           {simplifiedResult && (
             <div className="space-y-4">
-              {/* Accessibility Toolbar */}
-              <div className="flex items-center justify-between bg-slate-100 p-2.5 rounded-xl text-xs font-semibold text-slate-700">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 size={15} className="text-emerald-600" />
+              {/* Accessibility & Action Toolbar */}
+              <div className="flex flex-wrap items-center justify-between gap-3 bg-surface p-3.5 rounded-2xl border border-border shadow-2xs">
+                <span className="flex items-center gap-2 text-xs font-bold text-navy">
+                  <CheckCircle2 size={16} className="text-emerald-verified" />
                   <span>Notice Analysis Complete</span>
                 </span>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <button
+                    type="button"
                     onClick={toggleSpeech}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                       isReadingAloud
-                        ? 'bg-rose-600 text-white'
-                        : 'bg-white text-slate-800 hover:bg-slate-200 border border-slate-300'
+                        ? 'bg-danger text-white'
+                        : 'bg-white text-navy hover:bg-slate-100 border border-border'
                     }`}
                   >
-                    {isReadingAloud ? <VolumeX size={14} /> : <Volume2 size={14} />}
+                    {isReadingAloud ? <VolumeX size={15} /> : <Volume2 size={15} />}
                     <span>{isReadingAloud ? t.parakh.stopAudio : t.parakh.readAloud}</span>
                   </button>
                   <button
+                    type="button"
                     onClick={() => setIsLargeText(!isLargeText)}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-200 text-xs font-bold"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-border hover:bg-slate-100 text-xs font-bold text-navy cursor-pointer"
                   >
-                    <Type size={14} />
+                    <Type size={15} />
                     <span>{isLargeText ? t.parakh.normalText : t.parakh.largerText}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCopyNoticeSummary}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-border hover:bg-slate-100 text-xs font-bold text-navy cursor-pointer"
+                  >
+                    {copiedNotice ? <Check size={15} className="text-emerald-verified" /> : <Copy size={15} />}
+                    <span>{copiedNotice ? t.parakh.copied : 'Copy Plain Summary'}</span>
                   </button>
                 </div>
               </div>
 
-              {/* Side by side layout */}
+              {/* Mobile Tab Switcher (Original / Simplified) */}
+              <div className="flex md:hidden border-b border-border gap-2">
+                <button
+                  type="button"
+                  onClick={() => setNoticeMobileTab('simplified')}
+                  className={`flex-1 py-2 text-xs font-bold border-b-2 ${
+                    noticeMobileTab === 'simplified' ? 'border-saffron text-saffron' : 'border-transparent text-muted'
+                  }`}
+                >
+                  {t.parakh.simplifiedNotice}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setNoticeMobileTab('original')}
+                  className={`flex-1 py-2 text-xs font-bold border-b-2 ${
+                    noticeMobileTab === 'original' ? 'border-saffron text-saffron' : 'border-transparent text-muted'
+                  }`}
+                >
+                  {t.parakh.originalNotice}
+                </button>
+              </div>
+
+              {/* Side-by-side on desktop, tabbed on mobile */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Original Document / Raw input */}
-                <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                <div className={`bg-surface border border-border rounded-2xl p-5 shadow-card space-y-3 ${
+                  noticeMobileTab !== 'original' ? 'hidden md:block' : 'block'
+                }`}>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted">
                     {t.parakh.originalNotice}
                   </h3>
-                  <div className="max-h-96 overflow-y-auto bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs text-slate-700 leading-relaxed font-mono whitespace-pre-wrap">
+                  <div className="max-h-96 overflow-y-auto bg-slate-50 p-3.5 rounded-xl border border-border text-xs text-navy leading-relaxed font-mono whitespace-pre-wrap">
                     {noticeText || 'Document uploaded as PDF/Image circular.'}
                   </div>
                 </div>
 
-                {/* Simplified Citizen Breakdown */}
-                <div className={`bg-white border border-emerald-200 rounded-2xl p-5 shadow-sm space-y-4 ${isLargeText ? 'text-base' : 'text-xs'}`}>
+                {/* Simplified Citizen Breakdown: 3 blocks (Who, What, Deadline) with amber highlights */}
+                <div className={`bg-surface border border-emerald-verified/30 rounded-2xl p-5 sm:p-6 shadow-card space-y-5 ${
+                  noticeMobileTab !== 'simplified' ? 'hidden md:block' : 'block'
+                }`}>
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-1">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-verified mb-1.5">
                       {t.parakh.simplifiedNotice}
                     </h3>
-                    <p className={`text-slate-800 leading-relaxed font-medium bg-emerald-50/60 p-3 rounded-xl border border-emerald-200 ${isLargeText ? 'text-base' : 'text-xs'}`}>
+                    <p className={`text-navy leading-relaxed font-semibold bg-emerald-tint/50 p-4 rounded-xl border border-emerald-verified/30 ${
+                      isLargeText ? 'text-base' : 'text-sm'
+                    }`}>
                       {simplifiedResult.summary}
                     </p>
                   </div>
 
-                  {/* Key Dates */}
+                  {/* 1. Key Dates & Deadlines */}
                   {simplifiedResult.key_dates?.length > 0 && (
-                    <div className="space-y-1.5">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
-                        <Calendar size={13} className="text-orange-600" />
+                    <div className="space-y-2">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-amber-warn flex items-center gap-1.5">
+                        <Calendar size={14} className="text-amber-warn" />
                         <span>{t.parakh.keyDates}</span>
                       </h4>
-                      <div className="space-y-1.5">
+                      <div className="space-y-2">
                         {simplifiedResult.key_dates.map((kd, i) => (
-                          <div key={i} className="flex items-start gap-2 bg-slate-50 p-2 rounded-lg border border-slate-200 text-xs">
-                            <span className="font-bold text-orange-700 shrink-0">{kd.date}:</span>
-                            <span className="text-slate-700">{kd.what}</span>
+                          <div key={i} className="flex items-start gap-2.5 bg-amber-tint/60 p-3 rounded-xl border border-amber-warn/30 text-xs">
+                            <span className="font-bold text-amber-warn shrink-0">{kd.date}:</span>
+                            <span className="text-navy font-medium">{kd.what}</span>
                           </div>
                         ))}
                       </div>
                     </div>
                   )}
 
-                  {/* Action Items */}
+                  {/* 2. Concrete Action Items */}
                   {simplifiedResult.action_items?.length > 0 && (
-                    <div className="space-y-1.5">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
-                        <CheckCircle2 size={13} className="text-emerald-600" />
+                    <div className="space-y-2">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-verified flex items-center gap-1.5">
+                        <CheckCircle2 size={14} className="text-emerald-verified" />
                         <span>{t.parakh.actionItems}</span>
                       </h4>
-                      <ul className="space-y-1 text-xs text-slate-700">
+                      <ul className="space-y-2 text-xs text-navy">
                         {simplifiedResult.action_items.map((act, i) => (
-                          <li key={i} className="flex items-start gap-1.5 bg-emerald-50/40 p-2 rounded-lg border border-emerald-100">
-                            <span className="font-bold text-emerald-600">•</span>
-                            <span>{act}</span>
+                          <li key={i} className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-border">
+                            <span className="font-bold text-emerald-verified shrink-0">•</span>
+                            <span className="font-medium">{act}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                   )}
 
-                  {/* Risks & Warnings */}
+                  {/* 3. Risks & Warnings */}
                   {simplifiedResult.risks?.length > 0 && (
-                    <div className="space-y-1.5">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-rose-800 flex items-center gap-1.5">
-                        <AlertTriangle size={13} className="text-rose-600" />
+                    <div className="space-y-2">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-danger flex items-center gap-1.5">
+                        <AlertTriangle size={14} className="text-danger" />
                         <span>{t.parakh.risksWarnings}</span>
                       </h4>
-                      <ul className="space-y-1 text-xs text-slate-700">
+                      <ul className="space-y-2 text-xs text-navy">
                         {simplifiedResult.risks.map((risk, i) => (
-                          <li key={i} className="flex items-start gap-1.5 bg-rose-50/50 p-2 rounded-lg border border-rose-100 text-rose-900">
-                            <span className="font-bold text-rose-600">!</span>
-                            <span>{risk}</span>
+                          <li key={i} className="flex items-start gap-2 bg-danger-tint/50 p-3 rounded-xl border border-danger/30 text-danger">
+                            <span className="font-bold shrink-0">!</span>
+                            <span className="font-semibold">{risk}</span>
                           </li>
                         ))}
                       </ul>
@@ -475,23 +529,49 @@ export default function Parakh() {
         </div>
       )}
 
-      {/* Safety Tips Box (Rule 2e) */}
-      <div className="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-2">
-          <ShieldAlert size={15} className="text-amber-700" />
-          <span>{t.parakh.safetyTitle}</span>
-        </h3>
-        <ul className="space-y-2 text-xs text-amber-900/90 leading-relaxed">
+      {/* Red-Bordered Safety Box Pinned at Bottom */}
+      <div
+        role="alert"
+        className="bg-danger-tint/60 border-2 border-danger rounded-2xl p-5 sm:p-6 space-y-3 shadow-card"
+      >
+        <div className="flex items-center gap-2.5 text-danger font-bold text-sm">
+          <Lock size={18} className="shrink-0" />
+          <h3 className="uppercase tracking-wider font-extrabold text-xs sm:text-sm">
+            {t.parakh.safetyTitle || 'Citizen Cyber Safeguard & Scam Alert'}
+          </h3>
+        </div>
+
+        <p className="text-xs sm:text-sm font-bold text-danger">
+          Never share OTP, PIN, or bank passwords with anyone. No legitimate government scheme charges fees via WhatsApp links.
+        </p>
+
+        <ul className="space-y-2 text-xs text-navy leading-relaxed pt-1">
           {t.parakh.safety.map((tip, idx) => (
             <li key={idx} className="flex items-start gap-2">
-              <span className="text-amber-600 font-bold">•</span>
-              <span>{tip}</span>
+              <span className="text-danger font-bold shrink-0">•</span>
+              <span className="font-medium">{tip}</span>
             </li>
           ))}
         </ul>
+
+        <div className="pt-2 border-t border-danger/20 flex flex-wrap items-center gap-4 text-xs font-bold text-danger">
+          <span className="flex items-center gap-1.5">
+            <PhoneCall size={14} />
+            <span>National Cybercrime Helpline: 1930</span>
+          </span>
+          <span>•</span>
+          <a
+            href="https://cybercrime.gov.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-navy"
+          >
+            cybercrime.gov.in
+          </a>
+        </div>
       </div>
 
-      {/* Prototype Notice Banner */}
+      {/* Civic Prototype Disclaimer */}
       <Disclaimer />
     </div>
   )
