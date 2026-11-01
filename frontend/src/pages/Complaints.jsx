@@ -2,12 +2,13 @@ import { useState, useEffect, useRef } from 'react'
 import {
   AlertOctagon, Copy, Check, Upload, Send, Clock, AlertTriangle,
   Building2, MapPin, Tag, RefreshCw, CheckCircle2, ChevronDown, ChevronUp, AlertCircle,
-  Paperclip, X, ImageIcon, FileText
+  Paperclip, X, ImageIcon, FileText, Printer, FileDown
 } from 'lucide-react'
 import { useLang } from '../i18n/strings'
 import client, { useMock } from '../api/client'
 import VoiceButton from '../components/VoiceButton'
 import Disclaimer from '../components/Disclaimer'
+import { printPetitionPdf } from '../utils/pdfGenerator'
 
 export default function Complaints() {
   const { lang, t } = useLang()
@@ -419,18 +420,28 @@ export default function Complaints() {
           {/* Formal Administrative Draft */}
           {registeredComplaint.formal_draft && (
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-700">
                   {t.complaints?.formalDraft}
                 </span>
-                <button
-                  type="button"
-                  onClick={() => handleCopy(registeredComplaint.formal_draft)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-50 hover:bg-orange-100 text-orange-700 text-xs font-bold border border-orange-200 transition-colors"
-                >
-                  {copiedDraft ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
-                  <span>{copiedDraft ? t.complaints?.copied : t.complaints?.copyDraft}</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => printPetitionPdf(registeredComplaint, lang)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs transition-colors"
+                  >
+                    <Printer size={14} />
+                    <span>{t.complaints?.downloadPdf || 'Download Official PDF'}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(registeredComplaint.formal_draft)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-50 hover:bg-orange-100 text-orange-700 text-xs font-bold border border-orange-200 transition-colors"
+                  >
+                    {copiedDraft ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
+                    <span>{copiedDraft ? t.complaints?.copied : t.complaints?.copyDraft}</span>
+                  </button>
+                </div>
               </div>
 
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-xs text-slate-800 whitespace-pre-wrap leading-relaxed max-h-72 overflow-y-auto">
@@ -528,7 +539,18 @@ export default function Complaints() {
 
                   <div className="text-[11px] text-slate-500 bg-slate-50 p-2 rounded-lg border border-slate-100 flex items-center justify-between">
                     <span className="truncate mr-2 font-medium">To: {item.department}</span>
-                    <span className="font-mono text-[10px] text-slate-400 shrink-0">#{item.id.slice(0, 8)}</span>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => printPetitionPdf(item, lang)}
+                        title="Download / Print Official Petition PDF"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-200 hover:bg-emerald-100 hover:text-emerald-700 text-slate-700 text-[10px] font-bold transition-colors cursor-pointer"
+                      >
+                        <Printer size={10} />
+                        <span>PDF</span>
+                      </button>
+                      <span className="font-mono text-[10px] text-slate-400">#{item.id.slice(0, 8)}</span>
+                    </div>
                   </div>
                 </div>
               )
