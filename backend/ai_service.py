@@ -2,7 +2,12 @@ from google import genai
 from google.genai import types
 import json
 import re
-from langdetect import detect
+try:
+    from langdetect import detect
+except ImportError:
+    def detect(text: str) -> str:
+        # Fallback if langdetect is not installed
+        return "hi" if any('\u0900' <= char <= '\u097f' for char in (text or "")) else "en"
 from models import (
     UserProfile, SchemeMatch, Scheme,
     VerifyResponse, CitationItem, MatchedResultItem, EvidenceItem
